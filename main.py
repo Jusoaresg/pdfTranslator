@@ -1,11 +1,8 @@
 import multiprocessing
 from pdf2docx.converter import cpu_count
 import translate
-<<<<<<< Updated upstream
 import os
-=======
 import io
->>>>>>> Stashed changes
 from pdf2docx import Converter
 import fitz
 import threading
@@ -36,20 +33,8 @@ def countPages(pdfFile):
     return pages
 
 def checkErrors(start, end):
-    for i in range(int(start), int(end)):
-        print(f'[PAGE INFO] Page: {i}')
+    cv = Converter(pdfFile)
 
-<<<<<<< Updated upstream
-        cv = Converter(pdfFile)
-        n = f'out{i}.docx'
-
-        try:
-            cv.convert(n, start=i, end=i+1)
-            os.remove(n)
-        except Exception as ex:
-            print("Error")
-            errors.append(f'Error: {ex} in page {i}')
-=======
     try:
         for i in range(int(start), int(end)):
             print(f'{Colors.GREEN} [PAGE INFO] Page: {i} {Colors.ENDTEXT}')
@@ -71,7 +56,6 @@ def checkErrors(start, end):
         print("Erro no for")
     finally:
         progressBar.close()
->>>>>>> Stashed changes
         cv.close()
 
 
@@ -99,33 +83,12 @@ if(checkForErrors == ""):
     for key, thread in enumerate(threads):
         thread.join()
 
-    #pages = countPages(pdfFile)
-    #quarterPages = pages/4
-
-    #x1 = threading.Thread(target=checkErrors, args=(0, quarterPages))
-    #x1.start()
-
-    #x2 = threading.Thread(target=checkErrors, args=(quarterPages+1, quarterPages*2))
-    #x2.start()
-
-    #x3 = threading.Thread(target=checkErrors, args=(quarterPages*2 + 1, quarterPages*3))
-    #x3.start()
-
-    #x4 = threading.Thread(target=checkErrors, args=(quarterPages*3 + 1, quarterPages*4))
-    #x4.start()
-
-    #x1.join()
-    #x2.join()
-    #x3.join()
-    #x4.join()
 
     print(errors)
 
-    #checkErrors()
 
 if len(errors) == 0:
     cv = Converter(pdfFile)
-    #cv.convert("output.docx")
     cv.convert("output.docx", start=0, end=countPages(pdfFile), multi_processing=True, cpu_count=threadsToUse)
     cv.close()
 
