@@ -1,5 +1,4 @@
 import translate
-import io
 import os
 from pdf2docx import Converter
 import fitz
@@ -12,6 +11,8 @@ checkForErrors = input("Deseja verificar por erros ? (Deixe vazio caso queira): 
 pdfFile = "sample.pdf"
 pdfFile = input("Coloque o caminho para o arquivo pdf para ser traduzido: ")
 
+#docxFile = "out.docx"
+
 errors = []
 
 def countPages(pdfFile):
@@ -21,28 +22,18 @@ def countPages(pdfFile):
     return pages
 
 def checkErrors(start, end):
-    cv = Converter(pdfFile)
+    for i in range(int(start), int(end)):
+        print(f'[PAGE INFO] Page: {i}')
 
-    try:
-        for i in range(int(start), int(end)):
-            print(f'[PAGE INFO] Page: {i}')
+        cv = Converter(pdfFile)
+        n = f'out{i}.docx'
 
-            #n = f'out{i}.docx'
-            output_stream = io.BytesIO()
-
-            try:
-                #cv.convert(n, start=i, end=i+1)
-                cv.convert(output_stream, start=i, end=i+1)
-                #os.remove(n)
-            except Exception as ex:
-                print("Error")
-                errors.append(f'Error: {ex} in page {i}')
-            finally:
-                output_stream.close()
-
-    except Exception as ex:
-        print("Erro no for")
-    finally:
+        try:
+            cv.convert(n, start=i, end=i+1)
+            os.remove(n)
+        except Exception as ex:
+            print("Error")
+            errors.append(f'Error: {ex} in page {i}')
         cv.close()
 
 
@@ -67,7 +58,29 @@ if(checkForErrors == ""):
     for key, thread in enumerate(threads):
         thread.join()
 
+    #pages = countPages(pdfFile)
+    #quarterPages = pages/4
+
+    #x1 = threading.Thread(target=checkErrors, args=(0, quarterPages))
+    #x1.start()
+
+    #x2 = threading.Thread(target=checkErrors, args=(quarterPages+1, quarterPages*2))
+    #x2.start()
+
+    #x3 = threading.Thread(target=checkErrors, args=(quarterPages*2 + 1, quarterPages*3))
+    #x3.start()
+
+    #x4 = threading.Thread(target=checkErrors, args=(quarterPages*3 + 1, quarterPages*4))
+    #x4.start()
+
+    #x1.join()
+    #x2.join()
+    #x3.join()
+    #x4.join()
+
     print(errors)
+
+    #checkErrors()
 
 if len(errors) == 0:
     cv = Converter(pdfFile)
