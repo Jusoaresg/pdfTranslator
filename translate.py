@@ -30,7 +30,7 @@ def translateDocx(threadsToUse):
     dividedParagraphs = paragraphs//threadsToUse
 
     paragraphsExcluded = 0
-    for k, p in enumerate(doc.paragraphs):
+    for _, p in enumerate(doc.paragraphs):
         if p.text != "" and not checkInteger(p.text):
             paragraphsExcluded = paragraphsExcluded + 1
 
@@ -51,7 +51,7 @@ def translateDocx(threadsToUse):
         threads.append(thread)
         thread.start()
 
-    for key, thread in enumerate(threads):
+    for _, thread in enumerate(threads):
         thread.join()
 
     progressBar.close()
