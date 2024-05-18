@@ -27,7 +27,7 @@ Esse projeto funciona da seguinte maneira:
  3. Após isso, ele começa a verificar cada parágrafo dentro desse docx, faz uma verificação se é uma imagem, string vazia ou numero, e então troca cada parágrafo com a tradução feita pelo google tradutor.
 
 ## Dependencias
-Python e pip
+Python e pip. <br>
 Pacotes do pip em Requirements.txt
 
 ## O que falta fazer
