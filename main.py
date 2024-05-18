@@ -1,7 +1,4 @@
-import multiprocessing
-from pdf2docx.converter import cpu_count
 import translate
-import os
 import io
 from pdf2docx import Converter
 import fitz
@@ -22,7 +19,6 @@ checkForErrors = input("Deseja verificar por erros ? (Deixe vazio caso queira): 
 pdfFile = "sample.pdf"
 pdfFile = input("Coloque o caminho para o arquivo pdf para ser traduzido: ")
 
-#docxFile = "out.docx"
 
 errors = []
 
